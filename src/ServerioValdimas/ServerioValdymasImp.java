@@ -1,9 +1,13 @@
 package ServerioValdimas;
 
 import AutoKlases.Automobilis;
+import AutoKlases.KuroTipas;
 import AutoKlases.PakaitinisAutomobilis;
 import Custom.Custom;
+import Klientai.Klientas;
+import Klientai.VersloKlientas;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -16,9 +20,53 @@ public class ServerioValdymasImp implements ServerioValdymas {
     private List<Automobilis> remontuojamuAutomobiliuSarasas;
 
     public ServerioValdymasImp(){
+        remontuojamuAutomobiliuSarasas = new ArrayList<>();
     }
 
     public void paleistiUI(){
+
+        Klientas klientas = gautiKleinta();
+
+        System.out.println("Ar norite taisyti automobili? (T/N)");
+        if(!Custom.TaipNeBooleanCon()) {
+            System.out.println("Viso gero!");
+            System.exit(0);
+        }
+        int index;
+        for(index = 0; index < klientas.getKlientoAutomobiliuSaraas().size(); index++ ){
+            System.out.println(((index + 1) + ". " + klientas.getKlientoAutomobiliuSaraas().get(index)));
+        }
+
+        System.out.println("Pasirinkite Automobilio eiles numeri remomtui:");
+        while(true){
+            int nuskVerte = Custom.nuskaitytiIntVerteCon();
+            if (nuskVerte <= (index + 1) && nuskVerte >= 1){
+                break;
+            }
+        }
+
+        registruotiNaujaAutomobiliRemontui((klientas.getKlientoAutomobiliuSaraas().get(index-1)));
+        klientas.getKlientoAutomobiliuSaraas().remove(index-1);
+        System.out.println("Automobilis Uzregistruotas");
+
+        Automobilis automobilis = suteiktiPakaitini();
+        klientas.setAutomobilis((PakaitinisAutomobilis) automobilis);
+        System.out.println("Suteigtas Naujas Pakaitinis automobilis:");
+        System.out.println(automobilis);
+
+        while(true){
+            System.out.println("Ar norite paimti sutaisyta automobili? (T/N)");
+            if(Custom.TaipNeBooleanCon()){
+                break;
+            }
+        }
+
+
+        System.out.println("Auto");
+
+
+
+
 
 
     }
@@ -64,12 +112,59 @@ public class ServerioValdymasImp implements ServerioValdymas {
     }
 
     @Override
-    public void grazintiKlientuiSuremontuota(Automobilis automobilis) {
+    public Automobilis grazintiKlientuiSuremontuota(Automobilis automobilis) {
+        return remontuojamuAutomobiliuSarasas.getFirst();
+    }
+
+    public void irasytiAuto(){
 
     }
 
-    private void pridetiKlientoAutomobili(){
+    private Klientas gautiKleinta(){
+        List<String> KlientaiIrJuAuto = Custom.nuskaitytiFaila(KLIENTAI_JU_AUTO_PATH);
 
+        System.out.println("Iveskite Kliento ID: ");
+        int klientoID = Custom.nuskaitytiIntVerteCon();
+
+
+        boolean rastasKlientas = false;
+        Klientas klientas = null;
+
+        for (String s : KlientaiIrJuAuto){
+           String[] StringVertes = s.split(",");
+
+           if (klientoID != Integer.parseInt(StringVertes[0])) continue;
+
+
+           if (StringVertes.length == 8 && !rastasKlientas){
+               klientas = new Klientas();
+               rastasKlientas = true;
+           }
+
+           else if (StringVertes.length == 10 && !rastasKlientas){
+               klientas = new VersloKlientas();
+               rastasKlientas = true;
+           }
+
+
+           if (klientas instanceof VersloKlientas){
+               klientas.setId(Integer.parseInt(StringVertes[0]));
+               klientas.setVardas(StringVertes[1]);
+               klientas.setPavarde(StringVertes[2]);
+               klientas.setEmail(StringVertes[3]);
+               klientas.setKlientoAutomobiliuSaraas(new Automobilis(StringVertes[4],StringVertes[5],Integer.parseInt(StringVertes[6]), KuroTipas.valueOf(StringVertes[7])));
+               ((VersloKlientas)klientas).setImonesPavadinimas(StringVertes[8]);
+               ((VersloKlientas)klientas).setPVMMoketojoKodas(StringVertes[9]);
+           }
+           else {
+               klientas.setId(Integer.parseInt(StringVertes[0]));
+               klientas.setVardas(StringVertes[1]);
+               klientas.setPavarde(StringVertes[2]);
+               klientas.setEmail(StringVertes[3]);
+               klientas.setKlientoAutomobiliuSaraas(new Automobilis(StringVertes[4],StringVertes[5],Integer.parseInt(StringVertes[6]), KuroTipas.valueOf(StringVertes[7])));
+           }
+        }
+        return klientas;
     }
 
 

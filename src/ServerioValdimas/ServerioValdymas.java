@@ -8,5 +8,5 @@ public interface ServerioValdymas {
     void registruotiNaujaAutomobiliRemontui(Automobilis automobilis);
     Automobilis suteiktiPakaitini();
     List<Automobilis> gautiVisąRemontuojamuAutoSarasa();
-    void grazintiKlientuiSuremontuota(Automobilis automobilis);
+    Automobilis grazintiKlientuiSuremontuota(Automobilis automobilis);
 }

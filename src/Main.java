@@ -5,7 +5,11 @@ public class Main {
 
 
         ServerioValdymasImp serverioValdymasImp = new ServerioValdymasImp();
-        System.out.println(serverioValdymasImp.suteiktiPakaitini());
+        serverioValdymasImp.paleistiUI();
+       // System.out.println(serverioValdymasImp.gautiKleinta().getKlientoAutomobiliuSaraas());
+
+      //  System.out.println(serverioValdymasImp.suteiktiPakaitini());
+
 
     }
 }

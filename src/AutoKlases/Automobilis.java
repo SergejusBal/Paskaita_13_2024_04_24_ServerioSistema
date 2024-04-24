@@ -4,21 +4,21 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 
 public class Automobilis {
-    private String Marke;
+    private String marke;
     private String modelis;
     private int metai;
     private KuroTipas kuroTipas;
 
     public Automobilis(){}
     public Automobilis(String marke, String modelis, int metai, KuroTipas kuroTipas) {
-        Marke = marke;
+        this.marke = marke;
         this.modelis = modelis;
         this.metai = metai;
         this.kuroTipas = kuroTipas;
     }
 
     public String getMarke() {
-        return Marke;
+        return marke;
     }
 
     public String getModelis() {
@@ -34,7 +34,7 @@ public class Automobilis {
     }
 
     public void setMarke(String marke) {
-        Marke = marke;
+        marke = marke;
     }
 
     public void setModelis(String modelis) {
@@ -65,4 +65,10 @@ public class Automobilis {
         return automobilis;
     }
 
+    @Override
+    public String toString() {
+        return  "Marke: " + this.marke + " **** " +
+                "Modelis: " + this.modelis + " **** " +
+                "Metai: " + this.metai + " **** " +
+                "Kuro tipas: " + this.kuroTipas; }
 }

@@ -1,6 +1,7 @@
 package Klientai;
 
 import AutoKlases.Automobilis;
+import AutoKlases.PakaitinisAutomobilis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class Klientas {
     private String vardas;
     private String pavarde;
     private String email;
-    private Automobilis automobilis;
+    private PakaitinisAutomobilis automobilis;
     private List<Automobilis> klientoAutomobiliuSaraas;
 
     public Klientas() {
@@ -57,14 +58,13 @@ public class Klientas {
         this.email = email;
     }
 
-    public void setAutomobilis(Automobilis automobilis) {
+    public void setAutomobilis(PakaitinisAutomobilis automobilis) {
         this.automobilis = automobilis;
     }
 
-    public void setKlientoAutomobiliuSaraas(List<Automobilis> klientoAutomobiliuSaraas) {
-        this.klientoAutomobiliuSaraas = klientoAutomobiliuSaraas;
+    public void setKlientoAutomobiliuSaraas(Automobilis automobilis) {
+        this.klientoAutomobiliuSaraas.add(automobilis);
     }
-
 
 
 }
