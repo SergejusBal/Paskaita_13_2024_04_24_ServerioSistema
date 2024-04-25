@@ -71,4 +71,9 @@ public class Automobilis {
                 "Modelis: " + this.modelis + " **** " +
                 "Metai: " + this.metai + " **** " +
                 "Kuro tipas: " + this.kuroTipas; }
+
+    public String toCSVString(){
+        return String.format("%s,%s,%d,%s", this.marke, this.modelis,this.metai,this.kuroTipas.name());
+
+    }
 }

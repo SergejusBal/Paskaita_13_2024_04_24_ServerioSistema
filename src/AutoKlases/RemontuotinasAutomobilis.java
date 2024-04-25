@@ -17,4 +17,10 @@ public class RemontuotinasAutomobilis extends Automobilis {
     public void setDefektai(String defektai) {
         this.defektai = defektai;
     }
+
+    @Override
+    public String toCSVString(){
+        return String.format("%s,%s,%d,%s,%s", super.getMarke(), super.getModelis(),super.getLocalDate(),super.getKuroTipas().name(), this.defektai);
+    }
+
 }

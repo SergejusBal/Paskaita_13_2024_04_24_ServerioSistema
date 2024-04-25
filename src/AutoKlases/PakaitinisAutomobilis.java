@@ -34,4 +34,8 @@ public class PakaitinisAutomobilis extends Automobilis{
         }
         return automobilis;
     }
+    @Override
+    public String toCSVString(){
+        return String.format("%s,%s,%d,%s,%d", super.getMarke(), super.getModelis(),super.getLocalDate(),super.getKuroTipas().name(), this.rida);
+    }
 }

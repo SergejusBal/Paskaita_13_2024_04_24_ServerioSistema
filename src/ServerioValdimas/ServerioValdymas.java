@@ -1,12 +1,14 @@
 package ServerioValdimas;
 
 import AutoKlases.Automobilis;
+import Klientai.Klientas;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ServerioValdymas {
-    void registruotiNaujaAutomobiliRemontui(Automobilis automobilis);
+    void registruotiNaujaAutomobiliRemontui(Klientas klientas, Automobilis automobilis);
     Automobilis suteiktiPakaitini();
-    List<Automobilis> gautiVisąRemontuojamuAutoSarasa();
-    Automobilis grazintiKlientuiSuremontuota(Automobilis automobilis);
+    Map<Klientas, Automobilis> gautiVisąRemontuojamuAutoSarasa();
+    Automobilis grazintiKlientuiSuremontuota(Klientas klientas);
 }
