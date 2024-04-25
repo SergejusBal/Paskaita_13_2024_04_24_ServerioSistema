@@ -12,9 +12,9 @@ import java.util.*;
 
 public class ServerioValdymasImp implements ServerioValdymas {
 
-    private static String TAISYKLOS_AUTO_PATH = "C:/Users/Serge/IdeaProjects/Paskaita_13_2024_04_24_ServerioSistema/src/Resources/PakaitiniaiAutomobiliai.csv";
-    private static String KLIENTAI_JU_AUTO_PATH = "C:/Users/Serge/IdeaProjects/Paskaita_13_2024_04_24_ServerioSistema/src/Resources/KlientaiIrJuAuto.csv";
-    private static String REMONTO_ISTORIJA_PATH = "C:/Users/Serge/IdeaProjects/Paskaita_13_2024_04_24_ServerioSistema/src/Resources/SuremontuotuAutomobiliuIstorija.csv";
+    private static String TAISYKLOS_AUTO_PATH = "C:/Users/Sergejus/IdeaProjects/Paskaita_13_2024_04_24_ServerioSistema/src/Resources/PakaitiniaiAutomobiliai.csv";
+    private static String KLIENTAI_JU_AUTO_PATH = "C:/Users/Sergejus/IdeaProjects/Paskaita_13_2024_04_24_ServerioSistema/src/Resources/KlientaiIrJuAuto.csv";
+    private static String REMONTO_ISTORIJA_PATH = "C:/Users/Sergejus/IdeaProjects/Paskaita_13_2024_04_24_ServerioSistema/src/Resources/SuremontuotuAutomobiliuIstorija.csv";
 
     private Map<Klientas, Automobilis> remontuojamuAutomobiliuSarasas;
 
@@ -24,36 +24,79 @@ public class ServerioValdymasImp implements ServerioValdymas {
 
     public void paleistiUI(){
 
-        Klientas klientas = gautiKleinta();
+        Klientas klientas;
+        Automobilis automobilis;
+        boolean veikia = true;
+        while(veikia){
+            System.out.println("*********************************************************");
+            System.out.println("Pasirinkite paslauga: ");
+            System.out.println("Taisyti automobili. (1)");
+            System.out.println("Atsiimti automobili. (2)");
+            System.out.println("Uždaryti programa. (0)");
+            System.out.println("Iveskite pasirinkima: ");
+            int pasirinkimas = Custom.nuskaitytiIntVerteCon();
+            switch (pasirinkimas){
+                case 1:
+                    klientas = gautiKleinta();
+                    if (rastiKlienta(klientas)){
+                        System.out.println("Vienas klientas vienu metu gali taisyti tik viena automobili!");
+                        break;
+                    }
+
+                    int index;
+                    for(index = 0; index < klientas.getKlientoAutomobiliuSaraas().size(); index++ ){
+                        System.out.println(((index + 1) + ". " + klientas.getKlientoAutomobiliuSaraas().get(index)));
+                    }
+                    System.out.println("Pasirinkite Automobilio eiles numeri remomtui:");
+                    while(true){
+                        int nuskVerte = Custom.nuskaitytiIntVerteCon();
+                        if (nuskVerte <= (index + 1) && nuskVerte >= 1){
+                            break;
+                        }
+                    }
+
+                    System.out.println("Iveskite automobilio defekta:");
+                    String defektas = Custom.nuskaitytiStringVerteCon();
+                    RemontuotinasAutomobilis automobilis1 = (RemontuotinasAutomobilis) klientas.getKlientoAutomobiliuSaraas().get(index-1);
+                    ( automobilis1).setDefektai(defektas);
+
+                    registruotiNaujaAutomobiliRemontui(klientas,automobilis1);
+                    klientas.getKlientoAutomobiliuSaraas().remove(index-1);
+                    System.out.println("Automobilis užregistruotas.");
+
+                    Automobilis pakaitinisAutomobilis = suteiktiPakaitini();
+                    klientas.setAutomobilis((PakaitinisAutomobilis) pakaitinisAutomobilis);
+                    break;
+                case 2:
+                    System.out.println("Iveskite kliento ID:");
+                    klientas = gautiKleinta();
+                    if (!rastiKlienta(klientas)){
+                        System.out.println("Šis klientas nėra atidavęs automobilio!");
+                        break;
+                    }
+                    automobilis = gautiVisąRemontuojamuAutoSarasa().get(klientas);
+                    irasytiAutoIAutoIstorija(automobilis);
+                    grazintiPakaitiniAuto(klientas.getAutomobilis());
+                    klientas.setAutomobilis(null);
+                    klientas.getKlientoAutomobiliuSaraas().add(automobilis);
+
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+
+            }
+
+        }
 
 
 
-//
-//
-//        System.out.println("Ar norite taisyti automobili? (T/N)");
-//        if(!Custom.TaipNeBooleanCon()) {
-//            System.out.println("Viso gero!");
-//            System.exit(0);
-//        }
-//        int index;
-//        for(index = 0; index < klientas.getKlientoAutomobiliuSaraas().size(); index++ ){
-//            System.out.println(((index + 1) + ". " + klientas.getKlientoAutomobiliuSaraas().get(index)));
-//        }
-//
-//        System.out.println("Pasirinkite Automobilio eiles numeri remomtui:");
-//        while(true){
-//            int nuskVerte = Custom.nuskaitytiIntVerteCon();
-//            if (nuskVerte <= (index + 1) && nuskVerte >= 1){
-//                break;
-//            }
-//        }
-//        System.out.println("Iveskite automobilio defekta:");
-//        String defektas = Custom.nuskaitytiStringVerteCon();
-//        Automobilis automobilis = klientas.getKlientoAutomobiliuSaraas().get(index-1);
-//        ((RemontuotinasAutomobilis) automobilis).setDefektai(defektas);
-//        registruotiNaujaAutomobiliRemontui(automobilis);
-//        klientas.getKlientoAutomobiliuSaraas().remove(index-1);
-//        System.out.println("Automobilis Uzregistruotas.");
+
+
+
+
+
 //
 //        Automobilis pakaitinisAutomobilis = suteiktiPakaitini();
 //        klientas.setAutomobilis((PakaitinisAutomobilis) pakaitinisAutomobilis);
@@ -119,6 +162,10 @@ public class ServerioValdymasImp implements ServerioValdymas {
 
     public void irasytiAutoIAutoIstorija(Automobilis automobilis){
         Custom.irasytiEiluteIFaila(automobilis.toCSVString(),REMONTO_ISTORIJA_PATH);
+    }
+
+    public boolean rastiKlienta(Klientas klientas){
+        return gautiVisąRemontuojamuAutoSarasa().containsKey(klientas);
     }
 
     public void grazintiPakaitiniAuto(Automobilis automobilis){

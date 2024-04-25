@@ -5,6 +5,7 @@ import AutoKlases.PakaitinisAutomobilis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Klientas {
     private int id;
@@ -66,5 +67,16 @@ public class Klientas {
         this.klientoAutomobiliuSaraas.add(automobilis);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Klientas klientas = (Klientas) object;
+        return id == klientas.getId();
+    }
 
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

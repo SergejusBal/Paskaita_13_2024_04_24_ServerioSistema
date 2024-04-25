@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class RemontuotinasAutomobilis extends Automobilis {
 
     private String defektai;
+    public RemontuotinasAutomobilis(){}
     public RemontuotinasAutomobilis(String marke, String modelis, int metai, KuroTipas kuroTipas, String defektai) {
         super(marke, modelis, metai, kuroTipas);
         this.defektai = defektai;

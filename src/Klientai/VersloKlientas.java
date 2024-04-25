@@ -22,6 +22,19 @@ public class VersloKlientas extends Klientas{
     public void setPVMMoketojoKodas(String PVMMoketojoKodas) {
         this.PVMMoketojoKodas = PVMMoketojoKodas;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Klientas klientas = (Klientas) object;
+        return super.getId() == klientas.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.getId();
+    }
 }
 
 
